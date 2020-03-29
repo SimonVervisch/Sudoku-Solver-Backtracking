@@ -50,7 +50,9 @@ def valid_grid(grid):
 #    return array
 
 
+#def fill_grid_once(grid):
 
+#def last_fill?(grid): #happens only when last cell is 9 and is carried
 
 
 
