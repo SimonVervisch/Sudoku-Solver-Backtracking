@@ -44,6 +44,10 @@ def valid_grid(grid):
         if check_row_doubles(grid, row):
             return False
 
+#def fill_grid(grid):
+
+#def find_unitialised_cells(grid):
+#    return array
 
 
 
