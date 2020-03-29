@@ -2,5 +2,6 @@
 
 
 with
-* Naive implementation
-* Backtracking
+***
+* Naive Implementation
+* Backtracking Implementation
