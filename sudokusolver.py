@@ -1,11 +1,11 @@
 import numpy as np
 
-def init_unassigned(grid):
-    for i in range(9):
-        for j in range(9):
-            if grid[i][j] == 0:
-                grid[i][j] = 10
-    return grid
+#def init_unassigned(grid):
+#    for i in range(9):
+#        for j in range(9):
+#            if grid[i][j] == 0:
+#                grid[i][j] = 10
+#    return grid
 
 
 
@@ -58,19 +58,33 @@ def fill_grid(grid):
         
 
 
+def is_last_fill(grid,unit_cells):
+    return not grid[unit_cells[0]] 
 
 
 
 
 
-#def find_unitialised_cells(grid):
-#    return array
+def find_unitialised_cells(grid):
+    lst = []
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] == 0:
+                lst.append([i, j])
+
+
+    return lst
+
+def extract_grid_el(grid,unit_cells,element_number):
+    x_coordinate = unit_cells[element_number][0]
+    y_coordinate = unit_cells[element_number][1]
+    return grid[x_coordinate][y_coordinate]
+
 
 
 def fill_grid_once(grid, unit_cells):
 
     current = 0
-
     while current < len(unit_cells):
         if grid[unit_cells[current]] in range(10): # even 0 will be included
             grid[unit_cells[current]] += 1
@@ -81,12 +95,14 @@ def fill_grid_once(grid, unit_cells):
         else:
             current = len(unit_cells)
 
+        current += 1
+
+
+def init_unassigned(grid):
+    list = []
 
 
 
-
-
-#def last_fill(grid): #happens only when last cell is 9 and is carried
 
 #def increase_current(x,y,grid):
 
