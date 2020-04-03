@@ -49,7 +49,8 @@ def fill_grid(grid):
     
     while not last_filled:
         grid = fill_grid_once(grid,array_unit_cells) 
-        if valid_grid(grid,array_unit_cells):
+        print(grid)
+        if valid_grid(grid):
             return grid
         last_filled = is_last_fill(grid,array_unit_cells) 
 
@@ -59,7 +60,7 @@ def fill_grid(grid):
 
 
 def is_last_fill(grid,unit_cells):
-    return not grid[unit_cells[0]] 
+    return not grid[0][0]
 
 
 
@@ -75,10 +76,6 @@ def find_unitialised_cells(grid):
 
     return lst
 
-def extract_grid_el(grid,unit_cells,element_number):
-    x_coordinate = unit_cells[element_number][0]
-    y_coordinate = unit_cells[element_number][1]
-    return grid[x_coordinate][y_coordinate]
 
 
 
@@ -86,11 +83,17 @@ def fill_grid_once(grid, unit_cells):
 
     current = 0
     while current < len(unit_cells):
-        if grid[unit_cells[current]] in range(10): # even 0 will be included
-            grid[unit_cells[current]] += 1
+        x_coordinate = unit_cells[current][0]
+        y_coordinate = unit_cells[current][1]
+
+        first_x_coordinate = unit_cells[0][0]
+        first_y_coordinate = unit_cells[0][1]
+
+        if grid[x_coordinate][y_coordinate] in range(10): # even 0 will be included
+            grid[x_coordinate][y_coordinate] += 1
             return grid
         elif current == len(unit_cells):
-            grid[unit_cells[0]] = False # First unit element false -> last element
+            grid[0][0] = False # First unit element false -> last element
             return grid
         else:
             current = len(unit_cells)
@@ -98,25 +101,12 @@ def fill_grid_once(grid, unit_cells):
         current += 1
 
 
-def init_unassigned(grid):
-    list = []
-
-
-
-
-#def increase_current(x,y,grid):
-
-
-
-
 
 def naive_solver(grid):
     
-    return valid_grid(grid)
+    return fill_grid(grid)
 
 grid = np.full((9, 9), 0)
-grid = grid.copy()
 
-print(naive_solver(np.full((9, 9), 0)))
-
+print(naive_solver(grid))
 
