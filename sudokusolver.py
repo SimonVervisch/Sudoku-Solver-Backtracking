@@ -1,22 +1,23 @@
 import numpy as np
-
-#def init_unassigned(grid):
-#    for i in range(9):
-#        for j in range(9):
-#            if grid[i][j] == 0:
-#                grid[i][j] = 10
-#    return grid
-
-
+from math import floor
+import time
 
 # returns false if no double has been found
-def check_square_doubles(grid,x,y):
+def check_square_doubles(grid,x, y):
     array_true = np.full((9,), False)
-    for i in range(3):
-        for j in range(3):
-            if array_true[grid[x+i,y+j]]:
-                return True
-            array_true[grid[x+i,y+j]] = True
+    for i in range(9):
+        x_in_square = floor(i/3)
+        y_in_square = i%3
+        #print(i)
+        #print("grid is: ",grid)
+
+        element = grid[x+x_in_square][y+y_in_square] 
+        element -= 1
+
+       
+        if array_true[element]:
+            return True
+        array_true[element] = True
 
     return False
 
@@ -34,6 +35,8 @@ def check_row_doubles(grid,row):
 def valid_grid(grid):
     found_double = False
 
+    print(grid)
+
     for i in range(3):
         for j in range(3):
             if check_square_doubles(grid, i * 3, j*3):
@@ -43,26 +46,53 @@ def valid_grid(grid):
         if check_row_doubles(grid, row):
             return False
 
-def fill_grid(grid):
+def valid_grid(grid,array_unit_cells,idx)
+
+def fill_grid_naive(grid):
     last_filled = False
     array_unit_cells = find_unitialised_cells(grid) # these are the variables in CSP, domain is from 1-9
     
     while not last_filled:
         grid = fill_grid_once(grid,array_unit_cells) 
-        print(grid)
         if valid_grid(grid):
             return grid
         last_filled = is_last_fill(grid,array_unit_cells) 
 
     print("could not be filled")
     return False
-        
+
+
+def fill_grid_backtracking(grid):
+    last_filled = False
+    array_unit_cells = find_unitialised_cells(grid) # these are the variables in CSP, domain is from 1-9
+    index = 0
+    
+    end = fill_next(grid, index,array_unit_cells)
+
+    if not end:
+        print("couldn't fill this sudoku")
+
+    return grid
+
+    
+
+     
+
+
+
+
+ 
+
+
+def fill_next(grid,idx,array_unit_cells):
+    valid_grid = valid 
+
+      
 
 
 def is_last_fill(grid,unit_cells):
-    return not grid[0][0]
-
-
+    return grid[0][0] == -1
+         
 
 
 
@@ -72,10 +102,10 @@ def find_unitialised_cells(grid):
         for j in range(9):
             if grid[i][j] == 0:
                 lst.append([i, j])
+                grid[i][j] = 1
 
 
     return lst
-
 
 
 
@@ -86,17 +116,15 @@ def fill_grid_once(grid, unit_cells):
         x_coordinate = unit_cells[current][0]
         y_coordinate = unit_cells[current][1]
 
-        first_x_coordinate = unit_cells[0][0]
-        first_y_coordinate = unit_cells[0][1]
 
-        if grid[x_coordinate][y_coordinate] in range(10): # even 0 will be included
+        if grid[x_coordinate][y_coordinate] in range(9): # even 0 will be included
             grid[x_coordinate][y_coordinate] += 1
             return grid
         elif current == len(unit_cells):
-            grid[0][0] = False # First unit element false -> last element
+            grid[0][0] = -1 # First unit element false -> last element
             return grid
         else:
-            current = len(unit_cells)
+            grid[x_coordinate][y_coordinate] = 1
 
         current += 1
 
@@ -104,9 +132,25 @@ def fill_grid_once(grid, unit_cells):
 
 def naive_solver(grid):
     
-    return fill_grid(grid)
+    return fill_grid_naive(grid)
 
-grid = np.full((9, 9), 0)
 
+def backtracking_solver(grid):
+
+    return fill_grid_backtracking(grid)
+
+grid = np.array([[2,9,0,0,0,0,0,7,0],
+    [3,0,6,0,0,8,4,0,0],
+    [8,0,0,0,4,0,0,0,2],
+    [0,2,0,0,3,1,0,0,7],
+    [0,0,0,0,8,0,0,0,0],
+    [1,0,0,9,5,0,0,6,0],
+    [7,0,0,0,9,0,0,0,1],
+    [0,0,1,2,0,0,3,0,6],
+    [0,3,0,0,0,0,0,5,9]])
+
+#grid = np.full((9, 9), 0)
+start = time.time()
 print(naive_solver(grid))
-
+end = time.time()
+print(end - start)
