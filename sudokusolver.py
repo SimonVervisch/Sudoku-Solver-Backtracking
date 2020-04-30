@@ -91,11 +91,15 @@ def fill_next(grid,idx,array_unit_cells):
     while(grid[x,y] < 9):
         grid[x,y] += 1
 
-        print("index", idx)
+        print("index: {", x,y,"}")
         if valid_added_element(grid,x,y):
 
-            if fill_next(grid, idx +1 , array_unit_cells) or idx + 1 > len(array_unit_cells):
+            if idx == len(array_unit_cells) -1 :
                 return True
+            if fill_next(grid,idx+1, array_unit_cells):
+                return True
+    grid[x,y] = 0
+    return False
 
 
 
@@ -113,7 +117,6 @@ def valid_added_element(grid,x,y):
 
     for i in range(3):
         for j in range(3):
-            print(x_square,y_square)
 
             element = grid[i+x_square,j +y_square] - 1
             if element == -1:
