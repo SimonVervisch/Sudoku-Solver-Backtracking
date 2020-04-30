@@ -220,6 +220,6 @@ grid = np.array([[2,9,0,0,0,0,0,7,0],
 
 #grid = np.full((9, 9), 0)
 start = time.time()
-print(backtracking_solver(grid))
+print(valid_grid(backtracking_solver(grid)))
 end = time.time()
 print(end - start)
